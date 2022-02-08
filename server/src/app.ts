@@ -19,8 +19,12 @@ app.get("/params/:param1/:param2", (req, res) => {
 })
 
 app.post("/saveInfo", (req, res) => {
-  res.json(data.createInfo(String(req.body.name), String(req.body.email), String(req.body.phone)))
+  res.json({id: data.createInfo(String(req.body.name), String(req.body.email), String(req.body.phone)).id})
   // res.send(req.body.name)
+})
+
+app.post("/retrieveInfo", (req, res) => {
+  res.json(data.searchInfo(Number(req.body.id)))
 })
 
 app.listen(port, () => {

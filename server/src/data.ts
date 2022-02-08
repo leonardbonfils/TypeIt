@@ -5,6 +5,8 @@ type personalInfo = {
     phone?: string
 }
 
+let infos: personalInfo[] = [];
+
 let max = 9999;
 let min = 1;
 let randomId = Math.floor(Math.random() * (max - min + 1) + min)
@@ -24,8 +26,14 @@ function createInfo(name?: string, email?: string, phone?: string) {
       phone: phone
     };
 
+    infos.push(createdInfo)
     return createdInfo
+}
+
+function searchInfo(id: number) {
+    return infos.find(info => info.id === id);
 }
 
 exports.generatedInfo = generatedInfo;
 exports.createInfo = createInfo;
+exports.searchInfo = searchInfo;
