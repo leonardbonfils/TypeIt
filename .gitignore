@@ -108,3 +108,5 @@ lib
 
 # Ignore node dependencies
 node_modules
+client/.browserslistrc
+client/.editorconfig

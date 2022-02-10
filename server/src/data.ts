@@ -1,9 +1,5 @@
-type personalInfo = {
-    id?: number
-    name?: string
-    email?: string
-    phone?: string
-}
+import { personalInfo } from "./types";
+import * as app from "./app"
 
 let infos: personalInfo[] = [];
 
@@ -11,14 +7,22 @@ let max = 9999;
 let min = 1;
 let randomId = Math.floor(Math.random() * (max - min + 1) + min)
 
-const generatedInfo: personalInfo = {
+export const hasValues =
+    (obj) => Object.values(obj).some(o => o !== null && typeof o !== "undefined")
+export const isDefined =
+    (val) => val !== null && typeof val !== "undefined"
+
+export const generatedInfo: personalInfo = {
     id: randomId,
     name: "leonard bonfils",
     email: "leonard.bonfils@gmail.com",
     phone: "(514) 699-5586"
 }
 
-function createInfo(name?: string, email?: string, phone?: string) {
+export function createInfo(body: any) {
+    
+    const {name, email, phone} = body
+
     const createdInfo: personalInfo = {
       id: Math.floor(Math.random() * (max - min + 1) + min),
       name: name,
@@ -27,13 +31,23 @@ function createInfo(name?: string, email?: string, phone?: string) {
     };
 
     infos.push(createdInfo)
-    return createdInfo
+
+    return createdInfo.id
 }
 
-function searchInfo(id: number) {
+export function deleteAllInfos() {
+    infos = []
+}
+
+export function searchInfo(id: number) {
     return infos.find(info => info.id === id);
 }
 
-exports.generatedInfo = generatedInfo;
-exports.createInfo = createInfo;
-exports.searchInfo = searchInfo;
+export function checkIdExists(id: number) {
+    return isDefined(infos.find((info) => info.id === id))
+}
+
+export function checkUserExists(body: any) {
+    const { name, email, phone } = body;
+    return isDefined(infos.find(info => info.name === name || info.email === email || info.phone === phone))
+}
