@@ -1,4 +1,3 @@
-import { resolveSoa } from "dns";
 import express from "express"
 const app = express();
 const port = 3000;
@@ -30,21 +29,21 @@ app.post("/saveInfo", (req, res) => {
   validateBody(req, res)
   if (data.checkUserExists(req.body)) {
     res.send({error: infoAlreadyExists})
-  }
-
-  res.send({result: infoCreatedSuccess,
+  } else {
+      res.send({result: infoCreatedSuccess,
             id: data.createInfo(req.body)})
+  }
 })
 
 app.post("/retrieveInfo", (req, res) => {
   validateBody(req, res)
   if (!data.checkIdExists(req.body.id)) {
     console.log(app.infoNotFound);
-    res.status(400).send({ error: app.infoNotFound });
+    res.status(400).send({ error: infoNotFound });
+  } else {
+    let foundInfo = data.searchInfo(req.body.id)
+    res.send({result: infoRetrievedSuccess, userInfo: foundInfo})
   }
-
-  let foundInfo = data.searchInfo(req.body.id)
-  res.send({result: infoRetrievedSuccess, userInfo: foundInfo})
 })
 
 app.get("/wipeInfo", (req, res) => {

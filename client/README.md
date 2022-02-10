@@ -1,4 +1,5 @@
-# client
+# TypeIt client
+Vue.js application
 
 ## Project setup
 ```

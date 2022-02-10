@@ -44,7 +44,8 @@ export function searchInfo(id: number) {
 }
 
 export function checkIdExists(id: number) {
-    return isDefined(infos.find((info) => info.id === id))
+    console.log("Checking if id: " + id + " exists.")
+    return isDefined(infos.find(info => info.id === id))
 }
 
 export function checkUserExists(body: any) {
