@@ -1,14 +1,18 @@
 <template>
   <section class='main'>
-    <div>
+    <div class='save'>
         <img alt="TypeIt" src="./assets/logo.png">
         <SaveInfo welcome="Welcome to TypeIt!"/>
     </div>
+    <!-- <div class='retrieve'>
+        <RetrieveInfo/>
+    </div> -->
   </section>
 </template>
 
 <script>
 import SaveInfo from './components/SaveInfo.vue'
+// import RetrieveInfo from './components/RetrieveInfo.vue'
 
 export default {
   name: 'App',
