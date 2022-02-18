@@ -8,10 +8,20 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <div id="app">
+      <p>
+        <router-link to="/">Type It</router-link>
+        <router-link to="/saveInfo">Save your info</router-link>
+        <router-link to="/retrieveInfo">Retrieve info</router-link>
+      </p>
+    </div>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+    <router-view />
     <!-- built files will be auto injected -->
   </body>
 </html>

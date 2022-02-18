@@ -5,12 +5,21 @@
     </div>
     <div class="input">
       <h3>{{prompt}}</h3>
-      <input type="text" v-model="name" placeholder="Your name" v-autowidth> <br>
-      <input type="email" v-model="email" placeholder="Your email" v-autowidth> <br>
-      <input type="tel" v-model="phone" placeholder="Your phone number" v-autowidth> <br><br>
+      <input type="text" v-model="name" placeholder="Name" v-autowidth="{
+      minWidth: '100px',
+      maxWidth: '300px',
+      comfortZone: '1ch'}"> <br>
+      <input type="email" v-model="email" placeholder="Email" v-autowidth="{
+      minWidth: '100px',
+      maxWidth: '300px',
+      comfortZone: '1ch'}"> <br>
+      <input type="tel" v-model="phone" placeholder="Phone #" v-autowidth="{
+      minWidth: '100px',
+      maxWidth: '300px',
+      comfortZone: '1ch'}"> <br><br>
       <button @click="generateId">Generate code</button> <br><br>
-      <button @click="testGET">Test GET</button> <br><br>
-      <label v-if="validReturn"><em>Here is your ID: {{id}}</em></label>
+      <!-- <button @click="testGET">Test GET</button> <br><br> -->
+      <label v-if="validReturn"><em>Here is your ID: <b>{{id}}</b></em></label>
       <label v-else><em>Waiting to generate ID...</em></label> <br><br>
       <label ref='resultLabel'><em>API call messages</em></label>
     </div>
@@ -31,8 +40,6 @@ export default {
       // UI variables
       prompt: 'Enter your info below to generate a code',
       infoSaved: 'Here is your ID: ',
-      confirmMessage: 'Information successfully processed.',
-      failureMessage: 'Information failed to be processed',
 
       // Data variables
       idResult: null,
@@ -63,6 +70,7 @@ export default {
         .then(response => {
           if (response.status === '409') {
             this.validReturn = false
+            this.$refs.resultLabel.textContent = response.data.error
             throw new Error(response.data.error)
           } else {
             this.id = response.data.id
