@@ -1,4 +1,5 @@
 import express from "express"
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
@@ -12,9 +13,13 @@ export let infoRetrievedSuccess = "Personal info was successfully retrieved."
 export let allInfoDeleted = "All stored info has successfully been deleted."
 
 app.use(express.json())
+// app.use(cors({
+//   origin: ['http://localhost:8080', 'http://www.typeit.ca']
+// }));
+app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Welcome to TypeIt");
+  res.send(data.infos);
 })
 
 app.get("/test", (req, res) => {
@@ -28,7 +33,7 @@ app.get("/paramsTest/:param1/:param2", (req, res) => {
 app.post("/saveInfo", (req, res) => {
   validateBody(req, res)
   if (data.checkUserExists(req.body)) {
-    res.send({error: infoAlreadyExists})
+    res.status(409).send({error: infoAlreadyExists})
   } else {
       res.send({result: infoCreatedSuccess,
             id: data.createInfo(req.body)})

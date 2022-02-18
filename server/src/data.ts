@@ -1,7 +1,7 @@
 import { personalInfo } from "./types";
 import * as app from "./app"
 
-let infos: personalInfo[] = [];
+export let infos: personalInfo[] = [];
 
 let max = 9999;
 let min = 1;

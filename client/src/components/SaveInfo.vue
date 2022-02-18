@@ -5,21 +5,27 @@
     </div>
     <div class="input">
       <h3>{{prompt}}</h3>
-      <input v-model="name" placeholder="Full name"> <br>
-      <input type="email" v-model="email" placeholder="Email"> <br>
-      <input type="tel" v-model="phone" placeholder="Phone number"> <br><br>
+      <input type="text" v-model="name" placeholder="Your name" v-autowidth> <br>
+      <input type="email" v-model="email" placeholder="Your email" v-autowidth> <br>
+      <input type="tel" v-model="phone" placeholder="Your phone number" v-autowidth> <br><br>
       <button @click="generateId">Generate code</button> <br><br>
-      <label v-if="validReturn">Here is your ID: {{id}}</label>
-      <label v-else><em>Waiting to generate ID...</em></label>
+      <button @click="testGET">Test GET</button> <br><br>
+      <label v-if="validReturn"><em>Here is your ID: {{id}}</em></label>
+      <label v-else><em>Waiting to generate ID...</em></label> <br><br>
+      <label ref='resultLabel'><em>API call messages</em></label>
     </div>
   </section>
 </template>
 
 <script>
-// import { axios } from 'axios'
+import { directive as VueInputAutowidth } from 'vue-input-autowidth'
 const axios = require('axios')
 
 export default {
+  directives: { autowidth: VueInputAutowidth },
+  setup () {
+
+  },
   data () {
     return {
       // UI variables
@@ -41,15 +47,6 @@ export default {
     }
   },
   mounted: function () {
-    window.vue = this
-    axios.get('http://localhost:3000/test')
-      .then(response => {
-        console.log(response.data)
-        this.email = response
-      })
-      .catch(error => {
-        console.log(error)
-      })
   },
   name: 'SaveInfo',
   props: {
@@ -58,6 +55,33 @@ export default {
   methods: {
     generateId () {
       // call API endpoints
+      axios.post('http://localhost:3000/saveInfo', {
+        name: this.name,
+        email: this.email,
+        phone: this.phone
+      })
+        .then(response => {
+          if (response.status === '409') {
+            this.validReturn = false
+            throw new Error(response.data.error)
+          } else {
+            this.id = response.data.id
+            this.validReturn = true
+            this.$refs.resultLabel.textContent = response.data.result
+          }
+        })
+        .catch(error => {
+          this.$refs.resultLabel.textContent = error
+        })
+    },
+    testGET () {
+      axios.get('http://localhost:3000/test')
+        .then(response => {
+          this.$refs.resultLabel.textContent = response.data.name
+        })
+        .catch(error => {
+          this.$refs.resultLabel.textContent = error
+        })
     }
   }
 }
