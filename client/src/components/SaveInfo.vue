@@ -1,8 +1,6 @@
 <template>
   <section class="infoInput">
-    <div class="welcome">
-      <h1>{{welcome}}</h1>
-    </div>
+    <img alt="TypeIt" src="../assets/saveLogo_256x256.png">
     <div class="input">
       <h3>{{prompt}}</h3>
       <input type="text" v-model="name" placeholder="Name" v-autowidth="{
@@ -18,8 +16,7 @@
       maxWidth: '300px',
       comfortZone: '1ch'}"> <br><br>
       <button @click="generateId">Generate code</button> <br><br>
-      <!-- <button @click="testGET">Test GET</button> <br><br> -->
-      <label v-if="validReturn"><em>Here is your ID: <b>{{id}}</b></em></label>
+      <label v-if="validReturn"><em>{{infoSaved}}<b>{{id}}</b></em></label>
       <label v-else><em>Waiting to generate ID...</em></label> <br><br>
       <label ref='resultLabel'><em>API call messages</em></label>
     </div>
@@ -43,7 +40,6 @@ export default {
 
       // Data variables
       idResult: null,
-      infoResult: null,
       name: '',
       email: '',
       phone: '',
@@ -56,12 +52,9 @@ export default {
   mounted: function () {
   },
   name: 'SaveInfo',
-  props: {
-    welcome: String
-  },
   methods: {
     generateId () {
-      // call API endpoints
+      // 'save info' API endpoint
       axios.post('http://localhost:3000/saveInfo', {
         name: this.name,
         email: this.email,
@@ -77,15 +70,6 @@ export default {
             this.validReturn = true
             this.$refs.resultLabel.textContent = response.data.result
           }
-        })
-        .catch(error => {
-          this.$refs.resultLabel.textContent = error
-        })
-    },
-    testGET () {
-      axios.get('http://localhost:3000/test')
-        .then(response => {
-          this.$refs.resultLabel.textContent = response.data.name
         })
         .catch(error => {
           this.$refs.resultLabel.textContent = error

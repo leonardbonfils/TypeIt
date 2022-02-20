@@ -1,14 +1,9 @@
 <template>
   <section class='app'>
     <div id='nav'>
-      <router-link to='/'>TypeIt</router-link> |
       <router-link to='/saveInfo'>Save Info</router-link>
-      <router-link to='/retrieveInfo'>Retrieve Info</router-link>
+      <router-link to='/retrieveInfo'> Retrieve Info</router-link>
     </div>
-    <!-- <div id='save'>
-        <img alt="TypeIt" src="./assets/logo.png">
-        <SaveInfo welcome="Welcome to TypeIt!"/>
-    </div> -->
     <router-view />
   </section>
 </template>
