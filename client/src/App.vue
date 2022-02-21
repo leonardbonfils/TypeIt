@@ -9,13 +9,9 @@
 </template>
 
 <script>
-// import SaveInfo from './components/SaveInfo.vue'
 
 export default {
   name: 'App'
-  // components: {
-  //   SaveInfo
-  // }
 }
 </script>
 

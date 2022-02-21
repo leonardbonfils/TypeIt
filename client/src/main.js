@@ -7,6 +7,7 @@ import SaveInfo from './components/SaveInfo.vue'
 import RetrieveInfo from './components/RetrieveInfo.vue'
 
 const routes = [
+  { path: '/', name: 'TypeIt', component: SaveInfo },
   { path: '/saveInfo', name: 'Save Info', component: SaveInfo },
   { path: '/retrieveInfo', name: 'Retrieve Info', component: RetrieveInfo }
 ]

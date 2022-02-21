@@ -1,5 +1,6 @@
 <template>
   <section class="infoInput">
+    <br><br>
     <img alt="TypeIt" src="../assets/saveLogo_256x256.png">
     <div class="input">
       <h3>{{prompt}}</h3>
@@ -16,9 +17,12 @@
       maxWidth: '300px',
       comfortZone: '1ch'}"> <br><br>
       <button @click="generateId">Generate code</button> <br><br>
-      <label v-if="validReturn"><em>{{infoSaved}}<b>{{id}}</b></em></label>
-      <label v-else><em>Waiting to generate ID...</em></label> <br><br>
-      <label ref='resultLabel'><em>API call messages</em></label>
+      <label v-if="validReturn"><em>{{infoSaved}}</em><b>{{id}}</b></label>
+      <label v-else></label> <br><br>
+      <button @click="copyToClipboard">Copy ID</button> <br><br>
+      <label v-if="idCopied">{{idCopiedMsg}}</label>
+      <label v-else></label> <br><br>
+      <label ref='resultLabel'><em></em></label>
     </div>
   </section>
 </template>
@@ -37,6 +41,8 @@ export default {
       // UI variables
       prompt: 'Enter your info below to generate a code',
       infoSaved: 'Here is your ID: ',
+      idCopiedMsg: 'ID copied!',
+      idCopied: false,
 
       // Data variables
       idResult: null,
@@ -74,6 +80,11 @@ export default {
         .catch(error => {
           this.$refs.resultLabel.textContent = error
         })
+    },
+    copyToClipboard () {
+      var copyText = this.id
+      navigator.clipboard.writeText(copyText.valueOf())
+        .then(this.idCopied = true)
     }
   }
 }

@@ -1,19 +1,21 @@
 <template>
   <section class="idInput">
+    <br><br>
     <img alt="TypeIt" src="../assets/retrieveLogo_256x256.png">
     <div class="input">
       <h3>{{prompt}}</h3>
-      <input type="number" v-model="id" placeholder="1234" v-autowidth="{
+      <input type="tel" v-model="id" placeholder="code" pattern="[0-9]+" v-autowidth="{
           minWidth: '100px',
           maxWidth: '150px',
-          comfortZone: '1ch'}"> <br>
+          comfortZone: '1ch'}"> <br><br>
       <button @click="retrieveInfo">Obtain info</button> <br><br>
       <label v-if="validReturn">Name: {{name}}</label>
-      <label v-else>Name: </label>
+      <label v-else></label> <br><br>
       <label v-if="validReturn">Email: {{email}}</label>
-      <label v-else>Email: </label>
+      <label v-else></label> <br><br>
       <label v-if="validReturn">Phone number: {{phone}}</label>
-      <label v-else>Phone number: </label>
+      <label v-else></label> <br><br>
+      <label ref='resultLabel'><em></em></label>
     </div>
   </section>
 </template>
@@ -30,7 +32,7 @@ export default {
   data () {
     return {
       // UI variables
-      prompt: 'Enter an ID to retrieve its associated info',
+      prompt: 'Enter a code to retrieve its associated info',
 
       // Data variables
       infoResult: null,
@@ -55,12 +57,15 @@ export default {
         .then(response => {
           if (response.status !== '200') {
             this.validReturn = false
+            this.$refs.resultLabel.textContent = response.data.error
             throw new Error(response.data.error)
           } else {
-            this.name = response.data.name
-            this.email = response.data.email
-            this.phone = response.data.phone
+            const info = response.data.userInfo
+            this.name = info.name
+            this.email = info.email
+            this.phone = info.phone
             this.validReturn = true
+            this.$refs.resultLabel.textContent = response.data.result
           }
         })
         .catch(error => {
