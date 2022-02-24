@@ -4,18 +4,14 @@
     <img alt="TypeIt" src="../assets/retrieveLogo_256x256.png">
     <div class="input">
       <h3>{{prompt}}</h3>
-      <input type="tel" v-model="id" placeholder="code" pattern="[0-9]+" v-autowidth="{
-          minWidth: '100px',
-          maxWidth: '150px',
-          comfortZone: '1ch'}"> <br><br>
-      <button @click="retrieveInfo">Obtain info</button> <br><br>
-      <label v-if="validReturn">Name: {{name}}</label>
-      <label v-else></label> <br><br>
-      <label v-if="validReturn">Email: {{email}}</label>
-      <label v-else></label> <br><br>
-      <label v-if="validReturn">Phone number: {{phone}}</label>
-      <label v-else></label> <br><br>
-      <label ref='resultLabel'><em></em></label>
+      <input type="tel" v-model="id" placeholder="ID" pattern="[0-9]+" v-autowidth="{
+          minWidth: '60px',
+          maxWidth: '100px',
+          comfortZone: '0px'}"> <br><br>
+      <el-button @click="retrieveInfo" type="warning" round>Get info</el-button> <br><br>
+      <label v-show="validReturn">Name: {{name}}</label> <br><br>
+      <label v-show="validReturn">Email: {{email}}</label> <br><br>
+      <label v-show="validReturn">Phone number: {{phone}}</label> <br><br>
     </div>
   </section>
 </template>
@@ -32,14 +28,14 @@ export default {
   data () {
     return {
       // UI variables
-      prompt: 'Enter a code to retrieve its associated info',
+      prompt: 'Enter an ID below to retrieve its associated info',
 
       // Data variables
       infoResult: null,
       name: '',
       email: '',
       phone: '',
-      id: '',
+      id: 0,
 
       // API variables
       validReturn: false
@@ -50,22 +46,26 @@ export default {
   name: 'RetrieveInfo',
   methods: {
     retrieveInfo () {
-      // 'retrieve info' API endpoints
+      if (this.id === '') {
+        alert('Please enter an ID.')
+        return
+      }
+
+      // 'retrieve info' API endpoint
+      const idAsInt = parseInt(this.id)
       axios.post('http://localhost:3000/retrieveInfo', {
-        id: this.id
+        id: idAsInt
       })
         .then(response => {
-          if (response.status !== '200') {
+          if (response.status !== 200) {
             this.validReturn = false
-            this.$refs.resultLabel.textContent = response.data.error
             throw new Error(response.data.error)
           } else {
+            this.validReturn = true
             const info = response.data.userInfo
             this.name = info.name
             this.email = info.email
             this.phone = info.phone
-            this.validReturn = true
-            this.$refs.resultLabel.textContent = response.data.result
           }
         })
         .catch(error => {
@@ -77,7 +77,16 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --el-color-primary: #77b3d4;
+  --el-color-success: #67c23a;
+  --el-color-warning: #e6a23c;
+  --el-color-danger: #f56c6c;
+  --el-color-error: #f56c6c;
+  --el-color-info: #909399;
+}
 button {
   font-weight: bold;
 }
+
 </style>

@@ -2,6 +2,9 @@ import { createApp } from 'vue'
 import { plugin as VueInputAutowidth } from 'vue-input-autowidth'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 import App from './App.vue'
 import SaveInfo from './components/SaveInfo.vue'
 import RetrieveInfo from './components/RetrieveInfo.vue'
@@ -20,4 +23,5 @@ const router = createRouter({
 const app = createApp(App)
 app.use(router)
 app.use(VueInputAutowidth)
+app.use(ElementPlus)
 app.mount('#app')

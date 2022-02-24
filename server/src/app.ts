@@ -44,7 +44,7 @@ app.post("/retrieveInfo", (req, res) => {
   validateBody(req, res)
   if (!data.checkIdExists(req.body.id)) {
     console.log(app.infoNotFound);
-    res.status(400).send({ error: infoNotFound });
+    res.status(409).send({ error: infoNotFound });
   } else {
     let foundInfo = data.searchInfo(req.body.id)
     res.send({result: infoRetrievedSuccess, userInfo: foundInfo})
