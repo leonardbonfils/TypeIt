@@ -1,32 +1,28 @@
 <template>
   <section class="infoInput">
     <br><br>
-    <img alt="TypeIt" src="../assets/saveLogo_256x256.png">
+    <img alt="TypeIt" src="../assets/saveLogo_256x256.png"><br><br>
     <div class="input">
       <h3>{{prompt}}</h3>
       <el-form
         :label-position="labelPosition"
         label-width="100px"
         :model="formLabelAlign"
-        style="max-width: 460px">
+        style="max-width: 200px, margin: 0 auto">
         <el-form-item label="Name">
           <el-input v-model="formLabelAlign.name" placeholder="John Doe"></el-input>
         </el-form-item>
         <el-form-item label="Email">
-          <el-input v-model="formLabelAlign.region" placeholder="john.doe@gmail.com"></el-input>
+          <el-input v-model="formLabelAlign.email" placeholder="john.doe@gmail.com"></el-input>
         </el-form-item>
         <el-form-item label="Phone #">
-          <el-input v-model="formLabelAlign.type" placeholder="+1 (123) 456-7890"></el-input>
+          <el-input v-model="formLabelAlign.phone" placeholder="+1 (123) 456-7890"></el-input>
         </el-form-item>
       </el-form>
-      <label v-if="validReturn"><em>{{infoSaved}}</em><b>{{id}}</b><br><br></label>
-      <label v-else><br><br></label>
       <el-button @click="generateId" type="primary" round>1. Generate ID</el-button>
-      <el-button @click="copyToClipboard" type="primary" round>2. Copy ID</el-button> <br><br>
-      <label v-if="idCopied">{{idCopiedMsg}}</label>
-      <label v-else></label> <br><br>
-      <label ref='resultLabel'><em></em></label>
-      <div style="margin: 20px"></div>
+      <el-button @click="copyToClipboard" type="primary" round>2. Copy ID</el-button><br><br>
+      <label v-if="validReturn"><em>{{infoSaved}}</em><b>{{id}}</b></label>
+      <label v-else><br><br></label>
     </div>
     <el-dialog
       v-model="dialogVisible"
@@ -45,12 +41,11 @@
 </template>
 
 <script>
-import { directive as VueInputAutowidth } from 'vue-input-autowidth'
 import { reactive } from 'vue'
+import { ElMessage } from 'element-plus'
 const axios = require('axios')
 
 export default {
-  directives: { autowidth: VueInputAutowidth },
   setup () {
 
   },
@@ -58,9 +53,9 @@ export default {
     return {
       // UI variables
       prompt: 'Enter your info below to generate an ID',
-      infoSaved: 'Here is your ID: ',
-      idCopiedMsg: 'ID copied!',
-      idCopied: false,
+      infoSaved: 'Your ID is: ',
+      idCopiedMsg: 'ID copied to clipboard',
+      noIdToCopyMsg: 'You must generate an ID before you can copy it.',
       dialogVisible: false,
       labelPosition: 'right',
 
@@ -96,22 +91,42 @@ export default {
         .then(response => {
           if (response.status === 409) {
             this.validReturn = false
-            this.$refs.resultLabel.textContent = response.data.error
             throw new Error(response.data.error)
           } else {
             this.id = response.data.id
             this.validReturn = true
-            this.$refs.resultLabel.textContent = response.data.result
+            ElMessage({
+              showClose: true,
+              message: response.data.result,
+              type: 'success'
+            })
           }
         })
         .catch(error => {
-          this.$refs.resultLabel.textContent = error
+          console.log(error)
+          ElMessage({
+            showClose: true,
+            message: 'Error generating ID.',
+            type: 'error'
+          })
         })
     },
     copyToClipboard () {
+      if (this.id === '') {
+        ElMessage({
+          showClose: true,
+          message: this.noIdToCopyMsg,
+          type: 'error'
+        })
+        return
+      }
       var copyText = this.id
       navigator.clipboard.writeText(copyText.valueOf())
-        .then(this.idCopied = true)
+        .then(ElMessage({
+          showClose: true,
+          message: this.idCopiedMsg,
+          type: 'success'
+        }))
     }
   }
 }

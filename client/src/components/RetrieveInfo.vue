@@ -1,27 +1,44 @@
 <template>
   <section class="idInput">
     <br><br>
-    <img alt="TypeIt" src="../assets/retrieveLogo_256x256.png">
+    <img alt="TypeIt" src="../assets/retrieveLogo_256x256.png"><br><br>
     <div class="input">
       <h3>{{prompt}}</h3>
-      <input type="tel" v-model="id" placeholder="ID" pattern="[0-9]+" v-autowidth="{
-          minWidth: '60px',
-          maxWidth: '100px',
-          comfortZone: '0px'}"> <br><br>
+      <el-form
+      :label-position="labelPosition"
+      label-width="100px"
+      :model="formLabelAlign"
+      style="max-width: 10px, margin: 0 auto">
+        <el-form-item label="ID">
+          <el-input v-model="id" type="tel" placeholder="1234"></el-input>
+        </el-form-item>
+      </el-form>
       <el-button @click="retrieveInfo" type="warning" round>Get info</el-button> <br><br>
       <label v-show="validReturn">Name: {{name}}</label> <br><br>
       <label v-show="validReturn">Email: {{email}}</label> <br><br>
       <label v-show="validReturn">Phone number: {{phone}}</label> <br><br>
     </div>
+    <el-dialog
+      v-model="dialogVisible"
+      title="No ID was entered"
+      width="20%"
+      center=true
+      :before-close="handleClose">
+      <span>Please enter an ID.</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">OK</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </section>
 </template>
 
 <script>
-import { directive as VueInputAutowidth } from 'vue-input-autowidth'
+import { ElMessage } from 'element-plus'
 const axios = require('axios')
 
 export default {
-  directives: { autowidth: VueInputAutowidth },
   setup () {
 
   },
@@ -29,13 +46,15 @@ export default {
     return {
       // UI variables
       prompt: 'Enter an ID below to retrieve its associated info',
+      labelPosition: 'right',
+      dialogVisible: false,
 
       // Data variables
       infoResult: null,
       name: '',
       email: '',
       phone: '',
-      id: 0,
+      id: null,
 
       // API variables
       validReturn: false
@@ -46,8 +65,8 @@ export default {
   name: 'RetrieveInfo',
   methods: {
     retrieveInfo () {
-      if (this.id === '') {
-        alert('Please enter an ID.')
+      if (this.id === null) {
+        this.dialogVisible = true
         return
       }
 
@@ -66,10 +85,20 @@ export default {
             this.name = info.name
             this.email = info.email
             this.phone = info.phone
+            ElMessage({
+              showClose: true,
+              message: response.data.result,
+              type: 'success'
+            })
           }
         })
         .catch(error => {
           console.log(error)
+          ElMessage({
+            showClose: true,
+            message: 'Error retrieving info.',
+            type: 'error'
+          })
         })
     }
   }
