@@ -10,6 +10,8 @@ import App from './App.vue'
 import SaveInfo from './components/SaveInfo.vue'
 import RetrieveInfo from './components/RetrieveInfo.vue'
 
+import { User, Iphone, Message, Key } from '@element-plus/icons-vue'
+
 const routes = [
   { path: '/', name: 'TypeIt', component: SaveInfo },
   { path: '/saveInfo', name: 'Save Info', component: SaveInfo },
@@ -25,4 +27,11 @@ const app = createApp(App)
 app.use(router)
 app.use(VueInputAutowidth)
 app.use(ElementPlus)
+
+app
+  .component('User', User)
+  .component('Iphone', Iphone)
+  .component('Message', Message)
+  .component('Key', Key)
+
 app.mount('#app')

@@ -19,10 +19,30 @@
           <el-input v-model="formLabelAlign.phone" placeholder="+1 (123) 456-7890"></el-input>
         </el-form-item>
       </el-form>
-      <el-button @click="generateId" type="primary" round>1. Generate ID</el-button>
-      <el-button @click="copyToClipboard" type="primary" round>2. Copy ID</el-button><br><br>
-      <label v-if="validReturn"><em>{{infoSaved}}</em><b>{{id}}</b></label>
-      <label v-else><br><br></label>
+      <el-button @click="generateId" type="primary" round>1. Generate ID</el-button><br><br><br><br>
+      <transition name='fade'>
+        <div v-show='validReturn'>
+          <el-descriptions
+            class="margin-top"
+            :column="1"
+            :size="size"
+            border
+          >
+            <el-descriptions-item>
+              <template #label>
+                <div class="cell-item">
+                  <el-icon :style="iconStyle">
+                    <key />
+                  </el-icon>
+                  ID
+                </div>
+              </template>
+              {{id}}
+            </el-descriptions-item>
+          </el-descriptions>
+          <el-button @click="copyToClipboard" type="primary" round>2. Copy ID</el-button>
+        </div>
+      </transition>
     </div>
     <el-dialog
       v-model="dialogVisible"
@@ -53,7 +73,6 @@ export default {
     return {
       // UI variables
       prompt: 'Enter your info below to generate an ID',
-      infoSaved: 'Your ID is: ',
       idCopiedMsg: 'ID copied to clipboard',
       noIdToCopyMsg: 'You must generate an ID before you can copy it.',
       dialogVisible: false,
@@ -152,6 +171,17 @@ button {
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none;
+}
+
+.el-descriptions {
+  margin-top: 20px;
+}
+.cell-item {
+  display: flex;
+  align-items: center;
+}
+.margin-top {
+  margin-top: 20px;
 }
 
 </style>

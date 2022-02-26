@@ -13,10 +13,53 @@
           <el-input v-model="id" type="tel" placeholder="1234"></el-input>
         </el-form-item>
       </el-form>
-      <el-button @click="retrieveInfo" type="warning" round>Get info</el-button> <br><br>
-      <label v-show="validReturn">Name: {{name}}</label> <br><br>
-      <label v-show="validReturn">Email: {{email}}</label> <br><br>
-      <label v-show="validReturn">Phone number: {{phone}}</label> <br><br>
+      <el-button @click="retrieveInfo" type="warning" round>Get info</el-button>
+      <br><br>
+      <transition name='fade'>
+      <div v-show='validReturn'>
+        <el-descriptions
+          class="margin-top"
+          title="User information"
+          :column="1"
+          :size="size"
+          border
+        >
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                <el-icon :style="iconStyle">
+                  <user />
+                </el-icon>
+                Name
+              </div>
+            </template>
+            {{name}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                <el-icon :style="iconStyle">
+                  <message />
+                </el-icon>
+                Email
+              </div>
+            </template>
+            {{email}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <div class="cell-item">
+                <el-icon :style="iconStyle">
+                  <iphone />
+                </el-icon>
+                Phone #
+              </div>
+            </template>
+            {{phone}}
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
+      </transition>
     </div>
     <el-dialog
       v-model="dialogVisible"
@@ -45,7 +88,7 @@ export default {
   data () {
     return {
       // UI variables
-      prompt: 'Enter an ID below to retrieve its associated info',
+      prompt: 'Enter an ID below to retrieve its related info',
       labelPosition: 'right',
       dialogVisible: false,
 
@@ -55,6 +98,7 @@ export default {
       email: '',
       phone: '',
       id: null,
+      iconStyle: '8px',
 
       // API variables
       validReturn: false
@@ -65,6 +109,10 @@ export default {
   name: 'RetrieveInfo',
   methods: {
     retrieveInfo () {
+      this.validReturn = false
+      this.name = ''
+      this.email = ''
+      this.phone = ''
       if (this.id === null) {
         this.dialogVisible = true
         return
@@ -116,6 +164,17 @@ export default {
 }
 button {
   font-weight: bold;
+}
+
+.el-descriptions {
+  margin-top: 20px;
+}
+.cell-item {
+  display: flex;
+  align-items: center;
+}
+.margin-top {
+  margin-top: 20px;
 }
 
 </style>
