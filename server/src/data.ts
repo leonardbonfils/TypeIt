@@ -14,9 +14,9 @@ export const isDefined =
 
 export const generatedInfo: personalInfo = {
     id: randomId,
-    name: "Leonard Bonfils",
-    email: "leonard.fake.bonfils@icloud.com",
-    phone: "(514) 125-0000"
+    name: "John Smith",
+    email: "john.smith@icloud.com",
+    phone: "+1 (416) 335-4512"
 }
 
 infos.push(generatedInfo)

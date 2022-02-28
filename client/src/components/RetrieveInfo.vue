@@ -21,7 +21,6 @@
           class="margin-top"
           title="User information"
           :column="1"
-          :size="size"
           border
         >
           <el-descriptions-item>
@@ -172,8 +171,25 @@ button {
 .cell-item {
   display: flex;
   align-items: center;
+  margin-left: 20px;
 }
 .margin-top {
+  margin-top: 20px;
+}
+
+.el-icon {
+  margin-right: 10px;
+}
+
+.el-input {
+  margin-right: 180px;
+}
+
+.el-form {
+  margin-left: 125px;
+}
+
+.el-button {
   margin-top: 20px;
 }
 

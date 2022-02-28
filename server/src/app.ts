@@ -18,16 +18,12 @@ app.use(express.json())
 // }));
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send(data.infos);
-})
+// app.get("/", (req, res) => {
+//   res.send(data.infos);
+// })
 
 app.get("/test", (req, res) => {
   res.json(data.generatedInfo)
-})
-
-app.get("/paramsTest/:param1/:param2", (req, res) => {
-  res.send(req.params)
 })
 
 app.post("/saveInfo", (req, res) => {
@@ -51,10 +47,10 @@ app.post("/retrieveInfo", (req, res) => {
   }
 })
 
-app.get("/wipeInfo", (req, res) => {
-  data.deleteAllInfos()
-  res.send({result: allInfoDeleted})
-})
+// app.get("/wipeInfo", (req, res) => {
+//   data.deleteAllInfos()
+//   res.send({result: allInfoDeleted})
+// })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

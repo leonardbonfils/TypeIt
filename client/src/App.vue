@@ -4,6 +4,10 @@
     <div id='nav'>
       <router-link to='/saveInfo'>Save Info</router-link> |
       <router-link to='/retrieveInfo'> Retrieve Info</router-link>
+    </div> <br><br>
+    <div id='welcome'>
+      <h1>Welcome to TypeIt</h1>
+      <h3>Forget about spelling out your info to customer service!</h3>
     </div>
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">

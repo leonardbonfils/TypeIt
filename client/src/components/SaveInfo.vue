@@ -19,7 +19,7 @@
           <el-input v-model="formLabelAlign.phone" placeholder="+1 (123) 456-7890"></el-input>
         </el-form-item>
       </el-form>
-      <el-button @click="generateId" type="primary" round>1. Generate ID</el-button><br><br><br><br>
+      <el-button @click="generateId" type="primary" round>1. Generate ID</el-button><br><br>
       <transition name='fade'>
         <div v-show='validReturn'>
           <el-descriptions
@@ -31,9 +31,6 @@
             <el-descriptions-item>
               <template #label>
                 <div class="cell-item">
-                  <el-icon :style="iconStyle">
-                    <key />
-                  </el-icon>
                   ID
                 </div>
               </template>
@@ -175,12 +172,18 @@ button {
 
 .el-descriptions {
   margin-top: 20px;
+  margin-right: 150px;
 }
 .cell-item {
   display: flex;
   align-items: center;
+  margin-left: 150px;
 }
 .margin-top {
+  margin-top: 40px;
+}
+
+.el-button {
   margin-top: 20px;
 }
 
