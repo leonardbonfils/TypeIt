@@ -161,7 +161,7 @@ button {
   font-weight: bold;
 }
 
-#infoInput {
+.infoInput {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

@@ -19,7 +19,7 @@
       <div v-show='validReturn'>
         <el-descriptions
           class="margin-top"
-          title="User information"
+          title=""
           :column="1"
           border
         >
