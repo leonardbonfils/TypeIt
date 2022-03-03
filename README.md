@@ -2,9 +2,9 @@
 ### For people who dislike spelling out lengthy personal info on the phone
 
 ## Technologies
-Front-end: Node.js, Vue, JavaScript
+**Front-end:** Node.js, Vue, JavaScript
 
-Back-end: Node.js, Express, TypeScript
+**Back-end:** Node.js, Express, TypeScript
 
 ## Description
 Personal project I built that allows you to enter some basic personal info and obtain an ID in return, which you can give to a customer service rep for example.
