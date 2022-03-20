@@ -42,8 +42,8 @@ export default {
   margin: auto;
   margin-top: 110px;
   padding-top: 20px;
-  padding-bottom: 20px;
-  border-radius: 10px;
+  padding-bottom: 40px;
+  border-radius: 40px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */

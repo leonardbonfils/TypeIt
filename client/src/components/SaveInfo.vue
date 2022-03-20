@@ -6,7 +6,7 @@
       <h3>{{prompt}}</h3>
       <el-form
         :label-position="labelPosition"
-        label-width="100px"
+        label-width="75px"
         :model="formLabelAlign"
         style="max-width: 200px, margin: 0 auto">
         <el-form-item label="Name">
@@ -170,6 +170,9 @@ button {
             user-select: none;
 }
 
+.input {
+}
+
 .el-descriptions {
   margin-top: 20px;
   margin-right: 150px;
@@ -185,6 +188,19 @@ button {
 
 .el-button {
   margin-top: 20px;
+}
+
+.el-input {
+  margin-right: 150px;
+  margin-left: 50px;
+}
+
+.el-form {
+  margin-left: 100px;
+}
+
+.el-form-item {
+  width: auto;
 }
 
 </style>

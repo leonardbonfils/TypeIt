@@ -13,18 +13,11 @@ export let infoRetrievedSuccess = "Personal info was successfully retrieved."
 export let allInfoDeleted = "All stored info has successfully been deleted."
 
 app.use(express.json())
-// app.use(cors({
-//   origin: ['http://localhost:8080', 'http://www.typeit.ca']
-// }));
 app.use(cors());
 
 // app.get("/", (req, res) => {
 //   res.send(data.infos);
 // })
-
-app.get("/test", (req, res) => {
-  res.json(data.generatedInfo)
-})
 
 app.post("/saveInfo", (req, res) => {
   validateBody(req, res)
@@ -42,15 +35,12 @@ app.post("/retrieveInfo", (req, res) => {
     console.log(app.infoNotFound);
     res.status(409).send({ error: infoNotFound });
   } else {
-    let foundInfo = data.searchInfo(req.body.id)
+    var foundInfo = null
+    foundInfo = data.searchInfo(req.body.id)
+      .then(console.log(foundInfo))
     res.send({result: infoRetrievedSuccess, userInfo: foundInfo})
   }
 })
-
-// app.get("/wipeInfo", (req, res) => {
-//   data.deleteAllInfos()
-//   res.send({result: allInfoDeleted})
-// })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

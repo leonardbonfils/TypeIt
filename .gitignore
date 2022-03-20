@@ -111,3 +111,4 @@ node_modules
 client/.browserslistrc
 client/.editorconfig
 TypeIt-v2.json.postman_collection
+server/src/security.ts

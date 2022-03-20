@@ -168,6 +168,10 @@ button {
 .el-descriptions {
   margin-top: 20px;
 }
+
+.cell-tei {
+    border-radius: 20px;
+}
 .cell-item {
   display: flex;
   align-items: center;
@@ -182,11 +186,11 @@ button {
 }
 
 .el-input {
-  margin-right: 180px;
+  margin-right: 300px;
 }
 
 .el-form {
-  margin-left: 125px;
+  margin-left: 200px;
 }
 
 .el-button {
