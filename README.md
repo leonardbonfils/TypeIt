@@ -1,5 +1,5 @@
 # [TypeIt.ca](http://typeit.ca/)
-_Currently working on deploying to AWS. WIP_
+
 ### For people who dislike spelling out lengthy personal info on the phone
 
 ## Technologies
