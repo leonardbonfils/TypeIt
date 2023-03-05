@@ -1,4 +1,4 @@
-# [TypeIt.ca](http://typeit.ca/)
+# TypeIt
 
 ### For people who dislike spelling out lengthy personal info on the phone
 
